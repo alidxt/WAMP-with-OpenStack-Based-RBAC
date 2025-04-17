@@ -1,0 +1,14 @@
+Crossbar configs 
+---------------------
+Start crossbar
+--------------------
+sudo docker run \
+  -v "$PWD/nodeinfo":/node \
+  -u 0 \
+  --rm \
+  --name crossbar \
+  -it \
+  -p 8080:8080 \
+  crossbario/crossbar \
+  --cbdir /node/.crossbar
+---------------------------------------
