@@ -1,0 +1,27 @@
+# Save this content to secure_wamp_project/mock_keystone/policies.yaml
+# Define your RBAC policies here.
+# Format: "wamp_uri_action": "rule"
+# Rules can be "role:role_name" or "role:role1 or role:role2" or "" (allow) or "!" (deny)
+#
+# WAMP URI Actions:
+# For RPC: "com.iiot.rpc.procedure_name.call" (for callers)
+#          "com.iiot.rpc.procedure_name.register" (for callees)
+# For Pub/Sub: "com.iiot.topic.topic_name.publish"
+#              "com.iiot.topic.topic_name.subscribe"
+
+# General admin privileges (Conceptual: An admin should often have all access)
+"com.iiot.*.admin": "role:admin"
+
+# Pub/Sub Policies
+"com.iiot.topic.sensor_data.publish": "role:sensor_publisher or role:admin"
+"com.iiot.topic.sensor_data.subscribe": "role:hmi_viewer or role:admin or role:member"
+
+"com.iiot.topic.alarm_notifications.publish": "role:admin"
+"com.iiot.topic.alarm_notifications.subscribe": "role:hmi_viewer or role:admin"
+
+# RPC Policies
+"com.iiot.rpc.control_pump.call": "role:admin or role:engineer"
+"com.iiot.rpc.control_pump.register": "role:admin or role:engineer"
+
+"com.iiot.rpc.read_status.call": "role:hmi_viewer or role:admin or role:member"
+"com.iiot.rpc.read_status.register": "role:admin"
