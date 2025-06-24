@@ -1,0 +1,8 @@
+listen:
+  - protocol: websocket
+    endpoint: 0.0.0.0:8080
+    tls_cert: /certs/server.crt
+    tls_key: /certs/server.key
+realms:
+  - uri: realm1
+    anonymous_auth: true

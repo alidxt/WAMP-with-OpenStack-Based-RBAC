@@ -1,0 +1,7 @@
+Flask
+PyJWT
+python-dotenv
+Autobahn
+Twisted # Autobahn uses Twisted for async, or asyncio
+pyOpenSSL # For TLS in Autobahn clients
+requests # For mock_keystone to simulate API calls if needed, and for clients to get tokens
