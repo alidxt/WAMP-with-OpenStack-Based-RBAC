@@ -1,4 +1,3 @@
-# Save this content to secure_wamp_project/mock_keystone/app.py
 import json
 import os
 import sqlite3
