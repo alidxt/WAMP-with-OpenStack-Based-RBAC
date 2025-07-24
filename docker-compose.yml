@@ -1,0 +1,56 @@
+services:
+  crossbar:
+    image: crossbario/crossbar:latest
+    container_name: crossbar_router
+    volumes:
+      - .:/app # Mount the entire project directory to /app (includes .crossbar)
+    ports:
+      - "8080:8080"
+    command: --cbdir /app/.crossbar
+    environment:
+      - CROSSBAR_DEBUG=true
+    restart: unless-stopped
+
+  mock_keystone:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mock_keystone_server
+    volumes:
+      - .:/app 
+    ports:
+      - "5000:5000"
+    command: python3 /app/mock_keystone/app.py 
+    restart: on-failure
+
+  # mock_keystone_wamp_authenticator service remains removed
+
+  subscriber_client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wamp_subscriber
+    volumes:
+      - .:/app 
+    command: python3 -u -m wamp_clients.subscriber --username hmi_dashboard_viewer --realm realm1 --authid hmi_viewer_client --ticket hmi_viewer_secret 
+    mem_limit: 1024m 
+    depends_on:
+      crossbar:
+        condition: service_started
+      mock_keystone:
+        condition: service_started
+
+  publisher_client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wamp_publisher
+    volumes:
+      - .:/app 
+    command: python3 -u -m wamp_clients.publisher --username sensor_device_1_publisher --realm realm1 --authid sensor_publisher_client --ticket sensor_publisher_secret 
+    mem_limit: 1024m 
+    depends_on:
+      crossbar:
+        condition: service_started
+      mock_keystone:
+        condition: service_started
