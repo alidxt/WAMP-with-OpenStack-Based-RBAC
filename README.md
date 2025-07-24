@@ -1,4 +1,4 @@
-# **Secure WAMP Messaging with Dynamic RBAC and TLS**
+# **Secure WAMP Messaging with Dynamic RBAC over TLS**
 
 This project implements a secure and robust messaging infrastructure using the Web Application Messaging Protocol (WAMP), enhanced with Role-Based Access Control (RBAC) and Transport Layer Security (TLS). The system demonstrates how clients can be dynamically authenticated against a simulated OpenStack Keystone service and authorized based on their assigned roles for WAMP Publish & Subscribe (PubSub) and Remote Procedure Call (RPC) operations, all over an encrypted channel.
 
